@@ -494,7 +494,7 @@ import { Component, signal } from '@angular/core';
         font-family: var(--font-display);
         font-size: 4rem;
         font-weight: 700;
-        color: var(--white);
+        color: #ffffff;
         margin-bottom: 20px;
         line-height: 1.15;
         letter-spacing: -0.5px;
