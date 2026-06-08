@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-root',
+  host: { '[class.dark]': 'darkMode()' },
   standalone: true,
   template: `
     <nav class="nav">
@@ -14,6 +15,47 @@ import { Component, signal } from '@angular/core';
           <a href="#features">Features</a>
           <a href="#download">Download</a>
           <a href="#privacy">Privacy</a>
+          <button
+            class="theme-toggle"
+            (click)="toggleDarkMode()"
+            [attr.aria-label]="darkMode() ? 'Switch to light mode' : 'Switch to dark mode'"
+          >
+            @if (darkMode()) {
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+            } @else {
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            }
+          </button>
         </div>
       </div>
     </nav>
@@ -288,6 +330,30 @@ import { Component, signal } from '@angular/core';
         display: block;
       }
 
+      :host.dark {
+        --bg: #0f0f1a;
+        --bg-alt: #18182b;
+        --text: #e8e6e3;
+        --text-light: #9a9ab0;
+        --white: #1e1e32;
+        --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.4);
+      }
+
+      :host.dark .nav-logo-text {
+        color: var(--text);
+      }
+
+      :host.dark .section-title {
+        color: var(--text);
+      }
+
+      :host.dark .feature-card h3,
+      :host.dark .download-card h3,
+      :host.dark .privacy-card h3 {
+        color: var(--text);
+      }
+
       .nav {
         position: fixed;
         top: 0;
@@ -298,6 +364,11 @@ import { Component, signal } from '@angular/core';
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(13, 27, 62, 0.06);
+      }
+
+      :host.dark .nav {
+        background: rgba(15, 15, 26, 0.92);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       }
 
       .nav-inner {
@@ -342,6 +413,33 @@ import { Component, signal } from '@angular/core';
 
       .nav-links a:hover {
         color: var(--accent);
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(13, 27, 62, 0.12);
+        background: transparent;
+        color: var(--text-light);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      :host.dark .theme-toggle {
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+
+      :host.dark .theme-toggle:hover {
+        border-color: var(--accent);
       }
 
       .hero {
@@ -460,6 +558,10 @@ import { Component, signal } from '@angular/core';
         border: 1px solid rgba(13, 27, 62, 0.04);
       }
 
+      :host.dark .feature-card {
+        border-color: rgba(255, 255, 255, 0.04);
+      }
+
       .feature-card:hover {
         transform: translateY(-6px);
         box-shadow: var(--shadow-lg);
@@ -510,6 +612,10 @@ import { Component, signal } from '@angular/core';
         border: 1px solid rgba(13, 27, 62, 0.04);
         text-decoration: none;
         color: inherit;
+      }
+
+      :host.dark .download-card {
+        border-color: rgba(255, 255, 255, 0.04);
       }
 
       .download-card:hover {
@@ -573,6 +679,10 @@ import { Component, signal } from '@angular/core';
         padding: 64px 0 32px;
       }
 
+      :host.dark .footer {
+        background: #141428;
+      }
+
       .footer-top {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr;
@@ -584,7 +694,7 @@ import { Component, signal } from '@angular/core';
         font-family: var(--font-display);
         font-size: 1.4rem;
         font-weight: 700;
-        color: var(--white);
+        color: #ffffff;
         display: block;
         margin-bottom: 12px;
       }
@@ -595,7 +705,7 @@ import { Component, signal } from '@angular/core';
       }
 
       .footer-links h4 {
-        color: var(--white);
+        color: #ffffff;
         font-size: 0.85rem;
         font-weight: 600;
         letter-spacing: 2px;
@@ -672,6 +782,16 @@ import { Component, signal } from '@angular/core';
   ],
 })
 export class App {
+  protected readonly darkMode = signal(
+    typeof window !== 'undefined' && localStorage.getItem('theme') === 'dark',
+  );
+
+  toggleDarkMode() {
+    const next = !this.darkMode();
+    this.darkMode.set(next);
+    localStorage.setItem('theme', next ? 'dark' : 'light');
+  }
+
   showAlert(platform: string) {
     alert(
       `Holy Scriptures for ${platform} is coming soon! Check the GitHub repository for updates.`,
