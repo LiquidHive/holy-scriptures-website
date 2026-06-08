@@ -314,7 +314,12 @@ import { Component, signal } from '@angular/core';
             <h4>Links</h4>
             <a href="#features">Features</a>
             <a href="#download">Download</a>
-            <a href="#privacy">Privacy Policy</a>
+            <a
+              href="https://github.com/LiquidHive/app-privacy-policy/blob/cf3de077387ce84a95a203fa28d1e9d573fed62e/holy-scriptures-privacy.md"
+              target="_blank"
+              rel="noopener"
+              >Privacy Policy</a
+            >
           </div>
         </div>
         <div class="footer-bottom">
